@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router, Route,Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import RecipeDetail from './Recipe_Detail.tsx';
 import RecipeMain from './Recipe_Main.tsx';
