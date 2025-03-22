@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import styles from './Recipe_Main.module.css';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import detailStyle from './Recipe_Detail.module.css';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import styles from './Recipe_Main.module.css';
 
 type Recipe = {
   id: number;
@@ -67,8 +67,8 @@ const RecipeDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const fetchRecipe = () => {
-    if (!id) return;
+  const fetchRecipe = useCallback(() => {
+    if (id === undefined) return;
 
     api<Recipe>({
       path: `recipes/${id}`,
@@ -84,11 +84,11 @@ const RecipeDetail = () => {
       .catch((error) => {
         console.error(error);
       });
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchRecipe();
-  }, [id]);
+  }, [fetchRecipe]);
 
   if (!recipe) {
     return <div>Loading...</div>;
@@ -101,13 +101,20 @@ const RecipeDetail = () => {
       <div className={detailStyle.recipe_main_container}>
         <button
           className={detailStyle.detail_homeBtn}
-          onClick={() => navigate(`/`)}
+          onClick={() => void navigate(`/`)}
         >
           Home
         </button>
         <div className={detailStyle.recipe_main_info}>
           <div className={detailStyle.image_container}>
-            <img src={recipe.image} />
+            {recipe.image ? (
+              <img
+                src={recipe.image}
+                alt="레시피 이미지"
+              />
+            ) : (
+              <div>이미지가 없습니다</div>
+            )}
           </div>
           <div className={detailStyle.recipe_main_info_top}>
             <div className={detailStyle.recipe_nameBox}>

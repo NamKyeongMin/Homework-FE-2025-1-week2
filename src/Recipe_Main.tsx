@@ -1,7 +1,9 @@
+import './reset.css';
+
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import styles from './Recipe_Main.module.css';
-import './reset.css';
 
 type Recipe = {
   id: number;
@@ -107,7 +109,7 @@ const RecipeMain = () => {
             <div
               className={styles.recipe_container}
               key={recipe.id}
-              onClick={() => navigate(`/recipe/${recipe.id}`)}
+              onClick={() => void navigate(`/recipe/${recipe.id}`)}
             >
               <div className={styles.recipe_img}>
                 <img
